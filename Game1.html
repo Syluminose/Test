@@ -1,0 +1,135 @@
+<!DOCTYPE html><meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1"><script>
+// MIT License © 2025-2026 Syluminose
+let lp=z=>(u,v)=>{for(;u<v;u++)z(u)},l2=z=>(u,v,w,x)=>{for(;u<v;u++)for(let y=w;y<x;y++)z(u,y)},
+P1=1.5707963,B=new ArrayBuffer(4194304),F=new Float32Array(B),I=new Int32Array(B),U=new Uint32Array(B),urd=new Uint32Array(B,1024,32),
+D=document,drt=D.documentElement,cel=u=>D.createElement(u),ael=addEventListener,mmn=Math.min,mxx=Math.max,mrd=Math.round,pfn=()=>performance.now(),scr=screen,cbg="#070b14",ssf="px sans-serif",sgm="Story-Game",lst=localStorage,
+C3=cel("canvas"),C2=cel("canvas"),lm=cel("link"),li=cel("link"),la=cel("link"),m0=cel("meta"),m1=cel("meta"),
+G=C3.getContext("webgl2",{antialias:!0,preserveDrawingBuffer:!0}),X=C2.getContext("2d"),
+gab=G.ARRAY_BUFFER,gtf=G.TRANSFORM_FEEDBACK_BUFFER,gub=G.UNIFORM_BUFFER,gtd=G.TEXTURE_2D,MP=G.getParameter(G.ALIASED_POINT_SIZE_RANGE)[1],D0=0,
+EM=["🏃","🦅","⛏️","🔨","💤","⚔️","✒️","💬","🧗","🏊","🎨","🎁","🧭","🗺️","🧰","🗝️","🗡️","🛡️","👑","🏆","⛺","🔥","🪢","💎","🐉","👻","🧙","🧪","🔮","🦄","🌀","📖","🪄","🦉","🍄","🧞","🚀","🪐","🤖","👽","⭐","🛰️","☄️","⚡","🌌","👩‍🚀","🛸","🔭","🔍","🐾","🕰️","🎭","🔒","✉️","👤","⏳","🧤","📸","📰","⚖️","🌳","⛰️","🌊","☀️","🌙","⛈️","🌸","🌋","🐺","🐍","❄️","🌈","💥","🕯️","🕊️","❤️","🎯","💭","🥀","🤝","🎈","🧊","🦁","💡","🏰","🗼","🌉","⛵","🚂","🌲","🕳️","🏛️","🏝️","🏜️","🎪","🏠"],
+CL=["#0284c7","#d97706","#9333ea","#059669","#dc2626","#65a30d","#e11d48","#2563eb"],
+BG=["#bae6fd","#fde68a","#e9d5ff","#a7f3d0","#fecaca","#d9f99d","#fecdd3","#bfdbfe"],
+TA=[0,0,1,-1,0,0,0,2,0,0,-1,1],S0="width:100dvw;height:100dvh;",sxy="position:fixed;inset:0;"+S0,
+ST=["margin:0;"+S0+"overflow:hidden;background:"+cbg+";user-select:none;-webkit-tap-highlight-color:#0000;font-family:system-ui,sans-serif",sxy+"pointer-events:none"],
+shd="#version 300 es\nprecision highp float;precision highp int;layout(std140)uniform U{vec4 u0;};",
+VS=shd+`layout(location=0)in vec4 a0;layout(location=1)in vec4 a1;out vec4 v0;out vec4 v1;out mat3 v2;out vec3 v3;flat out vec4 v4;flat out vec3 v5;flat out vec3 v6;
+vec2 rt(vec2 p,vec2 c){return vec2(p.x*c.x-p.y*c.y,p.x*c.y+p.y*c.x);}
+void main(){float w=min(max(a1.z-u0.z,0.),u0.y),u=w*w*(2.2-1.2*w);vec2 p=mix(a0.zw,a0.xy,u);
+v0=vec4(w>0.?a0.xy:a0.zw,a0.zw);v1=vec4(a1.xy,w,a1.w);int k=int(a1.w+.5),d0=k&15,l0=k>>4&1,c0=d0>>1;
+float rx=mix(float((k>>5&3)-1)*1.5707963,a1.x,u),ry=mix(float((k>>7&3)-1)*1.5707963,a1.y,u),rz=float((k>>9)-1024)*u/64.;
+vec2 c1=vec2(.9689124,.247404),c2=vec2(.9800666,-.1986693),cz=vec2(cos(rz),sin(rz)),cx=vec2(cos(rx),sin(rx)),cy=vec2(cos(ry),sin(ry));
+mat3 m=mat3(1);for(int i=0;i<3;i++){m[i].yz=rt(m[i].yz,c1);m[i].xz=rt(m[i].xz,c2);
+m[i].xy=rt(m[i].xy,cz);m[i].yz=rt(m[i].yz,cx);m[i].xz=rt(m[i].xz,cy);}
+v2=m;v3=(step(0.,-m[2])*2.-1.)/max(abs(m[2]),1e-4);v5=abs(v3);v6=m[2]*m[2];
+v4=vec4(l0>0?vec3(.71,.33,.04):c0==0?vec3(.01,.52,.78):c0==1?vec3(.85,.47,.02):c0==2?vec3(.58,.2,.92):c0==3?vec3(.02,.59,.4):c0==4?vec3(.86,.15,.15):c0==5?vec3(.4,.64,.05):c0==6?vec3(.88,.11,.28):vec3(.15,.39,.92),l0);
+gl_Position=vec4(p,0.,1.);gl_PointSize=u0.w;}`,
+FS=shd+`in vec4 v1;in mat3 v2;in vec3 v3;flat in vec4 v4;flat in vec3 v5;flat in vec3 v6;uniform sampler2D uT;out vec4 o;
+vec4 tx(int x,int y,vec2 p,vec2 d,vec2 e,float nz){vec2 c=vec2(x,y)+.5,s=vec2(.0625,.125);if(nz>.85)return texture(uT,(c+clamp(p,-.44,.44))*s);
+vec2 a=d*.125+e*.375,b=e*.125-d*.375;return(texture(uT,(c+clamp(p+a,-.44,.44))*s)+texture(uT,(c+clamp(p-a,-.44,.44))*s)+texture(uT,(c+clamp(p+b,-.44,.44))*s)+texture(uT,(c+clamp(p-b,-.44,.44))*s))*.25;}
+void main(){vec2 u=(v1.z>0.?gl_PointCoord*2.-1.:(floor(gl_PointCoord*u0.w)+.5)/u0.w*2.-1.)*1.66;if(dot(u,u)>2.75)discard;
+vec3 ro=v2*vec3(u,2.2),rd=-v2[2],n=v3*ro,t1=-n-v5,t2=-n+v5,p;
+float tN=max(max(t1.x,t1.y),t1.z),tF=min(min(t2.x,t2.y),t2.z);if(tN>tF+.05)discard;
+p=ro+min(tN,tF)*rd;vec3 a=abs(p);float dM,aa;
+if(a.x<.72&&a.y<.72&&a.z<.72){dM=-.22;aa=.02;}
+else{float t=(tN+tF)*.5;
+for(int i=0;i<2;i++){vec3 q0=ro+rd*t;t-=dot(q0-clamp(q0,-.78,.78),rd)/max(dot(step(.78,abs(q0)),v6),.1);}
+dM=length(max(abs(ro+rd*t)-.78,0.))-.22;aa=clamp((abs(dFdx(dM))+abs(dFdy(dM)))*.75,.014,.045);if(dM>=aa)discard;}
+float al=smoothstep(aa,-aa,dM);int d0=int(v1.w+.5)&15,f;vec2 v;float nz,ny,nx,l0=v4.w;
+if(a.z>=a.x&&a.z>=a.y){float sg=p.z>0.?1.:-1.;f=p.z>0.?0:1;v=vec2(p.x*sg,p.y);nz=abs(rd.z);ny=v2[1].z*sg;nx=v2[0].z*sg;}
+else if(a.y>=a.x){float sg=p.y<0.?-1.:1.;f=p.y<0.?2:3;v=vec2(p.x,-p.z*sg);nz=abs(rd.y);ny=v2[1].y*sg;nx=v2[0].y*sg;}
+else{float sg=p.x>0.?1.:-1.;f=p.x>0.?4:5;v=vec2(-p.z*sg,p.y);nz=abs(rd.x);ny=v2[1].x*sg;nx=v2[0].x*sg;}
+float sh=clamp(.34-.12*l0+nz*(.38+.62*nz)*(.48+.18*l0)-ny*.12-nx*.06,.12,.96);
+vec3 bc=v4.rgb*(.76+.3*sh-dM*.35);
+vec2 q=abs(v)-.72,uv=v*.55,dvx=clamp(dFdx(uv),-.065,.065),dvy=clamp(dFdy(uv),-.065,.065);
+float r=length(max(q,0.))+min(max(q.x,q.y),0.)-.18,bd=smoothstep(-.07,-aa,r+dM*.4);
+if(bd>.999){o=vec4(bc*al,al);return;}
+vec4 em=vec4(0.);
+if(l0>.5&&nz>.55&&abs(v.x-.5)<.245&&abs(v.y+.5)<.245)em=tx(0,6,(v-vec2(.5,-.5))*1.8,dvx*3.2,dvy*3.2,nz);
+if(em.a<.98)em+=tx(d0,f,uv,dvx,dvy,nz)*(1.-em.a);
+vec3 bg=l0>.5?mix(vec3(.92,.7,.03),vec3(1.,.98,.75),sh):mix(v4.rgb,vec3(1.),sh);
+o=vec4(mix(bg*(1.-em.a)+em.rgb,bc,bd)*al,al);}`,
+P0,V0,V1,A0,A1,UB,TX,XF,SY=0,BIP=0,W=800,H=600,VM=8,T=0,ND=16,TM=+lst.getItem("dm")&65535||65535,
+fnt=u=>{X.textAlign="center";X.textBaseline="middle";X.font=u+ssf},fnh=u=>u-mrd(u/6.2831853)*6.2831853,
+fnw=(u,v,w,x,y,z)=>{X.beginPath();X.roundRect(u,v,w,x,VM*y);X.fill();X.lineWidth=VM*z;X.stroke()},
+f0=u=>X.fillText(I[412]<12?EM[((I[412]&1)*8+u)*6+(I[412]>>1)]:"🔒",u*128+64,68),F0=lp(f0),
+fna=u=>{let v=u*4,w=D0[v+3],x=2048+v;if(w){let y=w/255;F[x]=D0[v]/255*y;F[x+1]=D0[v+1]/255*y;F[x+2]=D0[v+2]/255*y;F[x+3]=y}else F[x]=F[x+1]=F[x+2]=F[x+3]=0},FNA=lp(fna),
+fnq=u=>{let v=u>11?128:1024;X.clearRect(0,0,v,128);I[412]=u;F0(0,v>>7);D0=X.getImageData(0,0,v,128).data;FNA(0,v*128);
+G.texSubImage2D(gtd,0,(u&1)*1024,(u>>1)*128,v,128,G.RGBA,G.FLOAT,F,2048)},FNQ=lp(fnq),
+f1=u=>{I[320+u]=u;I[432+u]=1024;I[448+u]=u},F1=lp(f1),
+fns=u=>{I[416+u]=0;lst.setItem(u,I[320+u]|(I[336+u]<<4)|(I[352+u]<<7)|(I[448+u]<<8)|4096)},FNS=lp(fns),
+fzi=u=>{I[416+u]=0},FZI=lp(fzi),
+fze=u=>{let v=u*8;F[v]=F[v+2];F[v+1]=F[v+3];F[v+6]=0},FZE=lp(fze),
+fnr=u=>{let v=+lst.getItem(u);I[320+u]=v&15;I[336+u]=v>>4&7;I[352+u]=v>>7&1;I[448+u]=v&4096?v>>8&15:u},FNR=lp(fnr),
+fne=u=>{let v=I[320+u],w=u*8,x=I[336+u],y=F[w+6]>0?F[746]:0,z=y*y*(2.2-1.2*y);
+I[416+v]=1;I[464+u]=v;F[512+v]=F[w+2]+(F[w]-F[w+2])*z;F[528+v]=F[w+3]+(F[w+1]-F[w+3])*z;
+F[544+v]=fnh(TA[x]*P1+(F[w+4]-TA[x]*P1)*z);F[560+v]=fnh(TA[x+6]*P1+(F[w+5]-TA[x+6]*P1)*z);F[576+v]=fnh((I[432+u]-1024)/64*z)},FNE=lp(fne),
+fnp=u=>{let v=u*8,w=I[336+u];if(F[v+6]>0)F[v+6]=F[746];F[v+7]=I[320+u]|(I[352+u]<<4)|(TA[w]+1<<5)|(TA[w+6]+1<<7)|(I[432+u]<<9)},FNP=lp(fnp),
+fnu=u=>{G.bindBuffer(gab,u?V1:V0);G.bufferSubData(gab,0,F,0,ND*8)},FNU=lp(fnu),
+f2=u=>{let v=I[404],w=I[407]*(v+1),x=u<w?u/(v+1)|0:I[407]+((u-w)/v|0),y=u<w?u-x*(v+1):u-w-(x-I[407])*v;
+F[608+u]=mrd((y-(u<w?v:v-1)*.5)*F[748]*.5)*2/W;F[624+u]=mrd(((I[406]-1)*.5-x)*F[748]*.5-H*.0175)*2/H},F2=lp(f2),
+fza=u=>{let v=I[448+u];if(v>=ND)v=I[448+u]=u;let w=u*8;F[w+2]=F[608+v];F[w+3]=F[624+v];if(!F[w+6]){F[w]=F[w+2];F[w+1]=F[w+3]}},FZA=lp(fza),
+fnk=u=>{if(!I[352+u]){let v=I[405]++;I[384+v]=u;I[368+v]=I[448+u]}},FNK=lp(fnk),
+fnl=u=>{let v=I[400]-1-u;if(v>0){let w=((U[256+u]&255)*(v+1))>>8,x=I[368+v];I[368+v]=I[368+w];I[368+w]=x}},FNL=lp(fnl),
+fnm=u=>{let v=I[464+u];if(TM>>v&1)I[320+I[403]++]=v},FNM=lp(fnm),
+fnn=u=>{if((TM>>u&1)&&!I[416+u])I[320+I[403]++]=u},FNN=lp(fnn),
+fni=u=>{I[368+u]=u;I[384+u]=u},FNI=lp(fni),
+f3=u=>{let v=I[384+u],w=I[320+v],x=I[368+u],y=v*8,z=I[416+w];
+I[448+v]=x;F[y+2]=F[608+x];F[y+3]=F[624+x];x=U[256+v];I[336+v]=((U[272+v]&255)*6)>>8;
+F[y]=z?F[512+w]:F[607+ND];F[y+1]=z?F[528+w]:F[623+ND];
+F[y+4]=(z?F[544+w]:0)+(1-(x&2))*12.56637;F[y+5]=(z?F[560+w]:0)+(1-(x>>1&2))*12.56637;
+I[432+v]=((z?F[576+w]:0)+(1-(x&1)*2)*6.283185)*64+1024|0;F[y+6]=1},
+F3=lp(f3),
+fnc=u=>{I[352+u]=0;F[u*8+6]=0},FNC=lp(fnc),
+fnd=u=>{let v=u*8,w=(F[v+2]*.5+.5)*W,x=(.5-F[v+3]*.5)*H;if(Math.hypot(I[401]-w,I[402]-x)<F[749]*.45){I[352+u]^=1;F[v+6]=0;I[414]=1}},FND=lp(fnd),
+f4=u=>{let v=G.createShader(u?G.FRAGMENT_SHADER:G.VERTEX_SHADER);G.shaderSource(v,u?FS:VS);G.compileShader(v);G.attachShader(P0,v);G.deleteShader(v)},F4=lp(f4),
+f5=u=>{G.texParameteri(gtd,G.TEXTURE_MAG_FILTER+u,G.LINEAR);G.bindVertexArray(u?A1:A0);G.bindBuffer(gab,u?V1:V0);
+G.bufferData(gab,4194304,G.DYNAMIC_COPY);G.enableVertexAttribArray(0);G.vertexAttribPointer(0,4,G.FLOAT,!1,32,0);
+G.enableVertexAttribArray(1);G.vertexAttribPointer(1,4,G.FLOAT,!1,32,16)},F5=lp(f5),
+ig=()=>{SY=0;C2.width=1024;C2.height=128;fnt(92);
+P0=G.createProgram();F4(0,2);G.transformFeedbackVaryings(P0,["v0","v1"],G.INTERLEAVED_ATTRIBS);
+G.linkProgram(P0);G.useProgram(P0);V0=G.createBuffer();V1=G.createBuffer();A0=G.createVertexArray();A1=G.createVertexArray();
+TX=G.createTexture();G.bindTexture(gtd,TX);F5(0,2);G.texStorage2D(gtd,1,G.RGBA16F,2048,1024);FNQ(0,13);D0=0;
+UB=G.createBuffer();G.bindBufferBase(gub,0,UB);G.bufferData(gub,16,G.DYNAMIC_DRAW);
+G.uniformBlockBinding(P0,G.getUniformBlockIndex(P0,"U"),0);XF=G.createTransformFeedback();G.bindTransformFeedback(G.TRANSFORM_FEEDBACK,XF);
+G.enable(G.SCISSOR_TEST);G.enable(G.BLEND);G.blendFunc(G.ONE,G.ONE_MINUS_SRC_ALPHA);G.clearColor(.03,.05,.09,1)},
+f7=u=>{let v=u&7,w=u>>3,x=W*.024+v*W*.12,y=H*.018+w*H*.072,z=TM>>u&1;
+X.fillStyle=z?BG[u>>1]:"#090d16";X.strokeStyle=z?CL[u>>1]:"#1e293b";fnw(x,y,W*.108,H*.058,1.4,z?.48:.2);
+X.globalAlpha=z?1:.28;X.fillText(EM[u*6],x+W*.054,y+H*.031);X.globalAlpha=1},
+F7=lp(f7),
+fnb=u=>{let v=u?u>1?W*.825:W*.655:W*.025,w=u?W*.15:W*.61;X.fillStyle=u?"#1e293b":CL[0];
+X.strokeStyle=u===1?"#eab308":"#38bdf8";fnw(v,H*.885,w,H*.088,1.8,.35);fnt(VM*(u?3.6:4.6));X.fillStyle="#f8fafc";
+X.fillText(u?u>1?"⛶":"🔓":"🎲",v+w*.5,H*.931)},FNB=lp(fnb),
+ui=()=>{X.clearRect(0,0,W,H);fnt(VM*3.4);F7(0,16);FNB(0,3)},
+sny=()=>{if(SY){G.clientWaitSync(SY,0,1e6);G.deleteSync(SY);SY=0}},
+up=u=>{let v=F[746]>0;if(u>1)F[746]=1;else if(!v)F[746]=.008;if(!v)F[745]=pfn()-8;FNP(0,ND);I[410]=1;if(!v&&!I[408])tk()},
+fng=()=>{let u=0,v=0;for(;u<16;u++)if(TM>>u&1)v++;ND=v||1;
+let w=W>H?(ND<4?1:ND<9?2:3):(ND<3?1:ND<7?2:ND<10?3:4),x=(ND+w-1)/w|0,
+y=mmn(W*.86/x,H*.62/w,VM*36);I[404]=ND/w|0;I[406]=w;I[407]=ND-I[404]*w;F[748]=y*2;F[749]=(mmn(y,MP)|0)&~1;F2(0,ND);FZA(0,ND)},
+rs=()=>{let u=(devicePixelRatio||1)*mmn(1,mmn(scr.width,scr.height)/mmn(innerWidth,innerHeight));W=(innerWidth*u|0)&~1;H=(innerHeight*u|0)&~1;
+let v=C2.width^W||C2.height^H;if(v){C3.width=C2.width=W;C3.height=C2.height=H;G.viewport(0,0,W,H);G.scissor(0,H*.155|0,W,H*.72|0);VM=(W<H?W:H)*.01;fng();ui()}return v},
+rsu=()=>{if(F[746]>0)FNE(0,ND);if(rs())up(1)},
+rl=u=>{let v=ND;FNE(0,v);I[405]=0;if(u){FNC(0,16);fng();I[403]=0;FNM(0,v);FNN(0,16);FNI(0,ND);I[400]=I[405]=ND}else{FNK(0,ND);I[400]=I[405]}
+FNL(0,I[400]);F3(0,I[405]);FZI(0,16);I[415]=1;up(80);crypto.getRandomValues(urd)},
+ck=(u,v)=>{if(v<H*.165){let w=(u-W*.024)/(W*.12)|0,x=(v-H*.018)/(H*.072)|0,y=(x<<3)+w;
+if(w>=0&&w<8&&x>=0&&x<2){let z=TM^(1<<y);TM=z?z:1<<y;lst.setItem("dm",TM);rl(1);X.clearRect(0,0,W,H*.16);fnt(VM*3.4);F7(0,16)}}
+else if(v>H*.875){if(u<W*.645)rl(0);else if(u<W*.815){FNC(0,16);I[415]=1;up(1)}
+else{if(BIP){BIP.prompt();BIP=0}else if(D.fullscreenElement)D.exitFullscreen();else drt.requestFullscreen()}}
+else{I[401]=u;I[402]=v;I[414]=0;FND(0,ND);if(I[414]){I[415]=1;up(1)}}},
+tk=async()=>{I[408]=0;sny();let u=pfn(),v=u-F[745];F[745]=u;if(v>3&&v<25)F[747]=F[747]*.8+v*.2;
+let w=mmn(.05,mxx(.002,v*.001));F[746]=mxx(0,F[746]-w);if(I[410]){FNU(0,2);G.bindBuffer(gab,null);I[410]=0}
+G.clear(G.COLOR_BUFFER_BIT);T++;F[1025]=F[746];F[1026]=w;F[1027]=F[749];G.bufferSubData(gub,0,F,1024,4);
+let x=T&1;G.bindVertexArray(x?A0:A1);G.bindBufferBase(gtf,0,x?V1:V0);
+G.beginTransformFeedback(G.POINTS);G.drawArrays(G.POINTS,0,ND);G.endTransformFeedback();
+G.bindBufferBase(gtf,0,null);G.bindVertexArray(null);SY=G.fenceSync(G.SYNC_GPU_COMMANDS_COMPLETE,0);G.flush();
+if(F[746]<=0){FZE(0,ND);if(I[415]){FNS(0,16);I[415]=0}}
+else if(!I[408])I[408]=setTimeout(tk,mxx(1,mmn(20,mrd(F[747]-(pfn()-u)))))};
+D.title=sgm;C2.width=C2.height=192;X.fillStyle=cbg;X.fillRect(0,0,192,192);fnt(120);X.fillText("🎲",96,104);
+let ic=C2.toDataURL();li.rel="icon";li.href=la.href=ic;la.rel="apple-touch-icon";
+lm.rel="manifest";lm.href="data:application/manifest+json,"+encodeURIComponent('{"name":"'+sgm+'","short_name":"'+sgm+'","start_url":"'+location.href+'","scope":"'+location.href+'","display":"fullscreen","background_color":"'+cbg+'","theme_color":"'+cbg+'","icons":[{"src":"'+ic+'","sizes":"192x192 512x512","type":"image/png","purpose":"any"}]}');
+ic=0;m1.name="apple-"+(m0.name="mobile-web-app-capable");m0.content=m1.content="yes";
+drt.style.cssText=ST[0];C3.style.cssText=ST[1];C2.style.cssText=sxy;drt.append(li,la,lm,m0,m1,C3,C2);crypto.getRandomValues(urd);
+F1(0,16);F[747]=8;ig();if(lst.getItem(0)!==null){FNR(0,16);rsu()}else{rs();rl(1)}
+ael("resize",rsu);C2.addEventListener("pointerdown",u=>ck(u.clientX*W/innerWidth,u.clientY*H/innerHeight),{passive:!0});
+ael("beforeinstallprompt",u=>{u.preventDefault();BIP=u});
+C3.addEventListener("webglcontextlost",u=>{u.preventDefault();SY=F[746]=0});C3.addEventListener("webglcontextrestored",()=>{ig();C2.width=0;rsu()})</script>
