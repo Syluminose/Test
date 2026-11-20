@@ -123,8 +123,7 @@ pmv=u=>{if(!I[39]||!u.isPrimary)return;let v=u.clientX*PR-I[40],w=u.clientY*PR-I
 pup=u=>{if(u.isPrimary){pmv(u);I[39]=0}},pcl=u=>{I[39]=0},pzm=u=>{if(u.ctrlKey||u.metaKey)u.preventDefault()},
 kzm=u=>{if((u.ctrlKey||u.metaKey)&&"+-=0_".includes(u.key))u.preventDefault()},tzm=u=>{if(!u.touches||u.touches.length>1)u.preventDefault()},
 lc=u=>{u.preventDefault();SY=F[49]=I[5]=I[8]=TX=txr=0},rc=u=>{ig();C3.width=0;ru()},
-ldq=async u=>{let v=await(await fetch("q.zip")).arrayBuffer(),w=new DataView(v),x=30+w.getUint16(26,1)+w.getUint16(28,1),y=w.getUint32(18,1)||w.getUint32(w.getUint32(v.byteLength-6,1)+20,1);
-sg=(await new Response(new Response(new Uint8Array(v,x,y)).body.pipeThrough(new DecompressionStream("deflate-raw"))).text()).trim().split(/\r?\n/);
+ldq=async u=>{let v=await(await fetch("q.b64")).text();sg=(await new Response((await fetch("data:application/octet-stream;base64,"+v.trim())).body.pipeThrough(new DecompressionStream("deflate-raw"))).text()).trim().split(/\r?\n/);
 rc();onresize=ru;el(C2,"pointerdown",pt);el(D,"pointermove",pmv);el(D,"pointerup",pup);el(D,"pointercancel",pcl);el(C3,"webglcontextlost",lc);el(C3,"webglcontextrestored",rc)};
 D.getElementsByTagName("meta")[1].content+=",maximum-scale=1,user-scalable=no";
 dt.style.cssText=sx+"background:linear-gradient(135deg,#fff8db,#ffe0eb 50%,#dff4ff);user-select:none";
