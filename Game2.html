@@ -6,7 +6,7 @@ od=new Uint32Array(B,1280,1024),mbf=new Float32Array(B,5376,5120),mbu=new Uint32
 ce=u=>D.createElement(u),el=(u,v,w,x)=>u.addEventListener(v,w,x),mn=Math.min,mxx=Math.max,abs=Math.abs,now=()=>performance.now(),sf="px system-ui,sans-serif",C3=ce("canvas"),C2=ce("canvas"),
 G=C3.getContext("webgl2",{antialias:!0,preserveDrawingBuffer:!0}),X=C2.getContext("2d"),gb=34962,gf=35982,gu=35345,gd=3553,MP=G.getParameter(33901)[1],lts=0,npv={passive:!1},ic=["🍹","🧭","🎪","🔮"],
 bt=["#0ea5e9","#8b5cf6","#ff477e","#f59e0b","#ec4899","#06b6d4","#10b981"],bs=["#7dd3fc","#c4b5fd","#fda4af","#fde68a","#fbcfe8","#a5f3fc","#6ee7b7"],bpx=[.01,.12,.34,.45,.6,.74,.89],bwd=[.1,.21,.1,.14,.13,.14,.1],
-sx="position:fixed;inset:0;width:100dvw;height:100dvh;touch-action:none;overscroll-behavior:none;",sg,bqs,bqu,sd="#version 300 es\nprecision highp float;precision highp int;layout(std140)uniform U{vec4 u0;vec4 u1;vec4 u2[30];vec4 u3;};",
+sx="position:fixed;inset:0;width:100dvw;height:100dvh;touch-action:none;overscroll-behavior:none;",sg,sd="#version 300 es\nprecision highp float;precision highp int;layout(std140)uniform U{vec4 u0;vec4 u1;vec4 u2[30];vec4 u3;};",
 VS=sd+`layout(location=0)in vec4 a0;layout(location=1)in vec4 a1;out vec4 v0;out vec4 v1;flat out mat3 v2;flat out vec4 v4;flat out vec4 v5;flat out vec3 v6;flat out vec3 v7;
 vec2 rt(vec2 p,vec2 c){return vec2(p.x*c.x-p.y*c.y,p.x*c.y+p.y*c.x);}
 void main(){int m=int(u0.x+.5),b=int(u0.z+.5),k=int(a1.w+.5),d0=k&7,s0=(k>>3)&7,s1=(k>>6)&7;
@@ -73,7 +73,6 @@ fo=(u,y)=>{od[(u<<8)|y]=(u<<8)|y},RF=l2(fo),
 ss=(u,y)=>{if(!(y&31))crypto.getRandomValues(ud);let w=255-y,x=(ud[y&31]>>>16)*(w+1)>>>16,z=od[(u<<8)|w];od[(u<<8)|w]=od[(u<<8)|x];od[(u<<8)|x]=z},RS=l2(ss),
 rmb=u=>{mbf[u]=mbu[u]*2.3283064e-10},RMB=lp(rmb),
 rrn=u=>{rnf[u]=rnu[u]*2.3283064e-10},RRN=lp(rrn),
-bqf=u=>{bqu[u]=bqs.charCodeAt(u)},BQF=lp(bqf),
 cpm=u=>{F[56+I[3]*20+u]=mbf[(I[22+I[3]]&255)*20+u]},CPM=lp(cpm),
 ln=(u,v,w,x,y,z)=>X.fillText(u.slice(v,w),x+.5|0,y+.5|0,z),
 dw=u=>{let v=0,w=I[9],x=I[34],y=sg[od[(u<<8)|(I[22+I[3]]&255)]]+" ?",z=y.length;
@@ -124,10 +123,9 @@ pmv=u=>{if(!I[39]||!u.isPrimary)return;let v=u.clientX*PR-I[40],w=u.clientY*PR-I
 pup=u=>{if(u.isPrimary){pmv(u);I[39]=0}},pcl=u=>{I[39]=0},pzm=u=>{if(u.ctrlKey||u.metaKey)u.preventDefault()},
 kzm=u=>{if((u.ctrlKey||u.metaKey)&&"+-=0_".includes(u.key))u.preventDefault()},tzm=u=>{if(!u.touches||u.touches.length>1)u.preventDefault()},
 lc=u=>{u.preventDefault();SY=F[49]=I[5]=I[8]=TX=txr=0},rc=u=>{ig();C3.width=0;ru()},
-ldq=async u=>{try{let v=await fetch("q.b64");if(!v.ok)throw v.status;bqs=atob((await v.text()).replace(/\s+/g,""));bqu=new Uint8Array(B,25856,bqs.length);BQF(0,bqs.length);
-sg=(await new Response(new Response(bqu).body.pipeThrough(new DecompressionStream("deflate-raw"))).text()).trim().split(/\r?\n/);bqs=bqu=0;
+ldq=async u=>{try{let v=await fetch("q.txt");if(!v.ok)throw v.status;sg=(await v.text()).trim().split(/\r?\n/);
 rc();onresize=ru;el(C2,"pointerdown",pt);el(D,"pointermove",pmv);el(D,"pointerup",pup);el(D,"pointercancel",pcl);el(C3,"webglcontextlost",lc);el(C3,"webglcontextrestored",rc)}
-catch(u){C2.width=W;C2.height=H;ft(24,0);X.fillStyle="#c00";X.fillText("q.b64: "+u,W>>1,H>>1)}};
+catch(u){C2.width=W;C2.height=H;ft(24,0);X.fillStyle="#c00";X.fillText("q.txt: "+u,W>>1,H>>1)}};
 D.getElementsByTagName("meta")[1].content+=",maximum-scale=1,user-scalable=no";
 dt.style.cssText=sx+"background:linear-gradient(135deg,#fff8db,#ffe0eb 50%,#dff4ff);user-select:none";
 C3.style.cssText=sx+"pointer-events:none";C2.style.cssText=sx;dt.append(C3,C2);RF(0,4,0,256);RS(0,4,0,255);crypto.getRandomValues(mbu);RMB(0,5120);crypto.getRandomValues(rnu);RRN(0,16384);RI(0,6);
